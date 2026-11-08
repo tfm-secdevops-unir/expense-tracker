@@ -26,3 +26,10 @@ test('rechaza un gasto sin importe', async () => {
   const res = await request(app).post('/api/expenses').send({ description: 'Sin importe' });
   expect(res.status).toBe(400);
 });
+
+test('GET /api/expenses/total suma los importes', async () => {
+  await request(app).post('/api/expenses').send({ description: 'pan', amount: 2 });
+  const res = await request(app).get('/api/expenses/total');
+  expect(res.status).toBe(200);
+  expect(res.body.total).toBe(2);
+});

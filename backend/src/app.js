@@ -31,4 +31,9 @@ app.delete('/api/expenses/:id', async (req, res) => {
   res.status(204).end();
 });
 
+app.get('/api/expenses/total', async (req, res) => {
+  const [resultado] = await Expense.aggregate([{ $group: { _id: null, total: { $sum: '$amount' } } }]);
+  res.json({ total: resultado ? resultado.total : 0 });
+});
+
 module.exports = { app, Expense };
