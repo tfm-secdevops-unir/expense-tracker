@@ -5,10 +5,14 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-FROM nginxinc/nginx-unprivileged:alpine@sha256:b5047b9b76845eac124358373c6852377c52e4b05834a47647e955dd91cb8f1e
 # Paquetes de Alpine al día; curl no se usa (el HEALTHCHECK usa wget de busybox).
+# La actualización necesita root, así que va en una etapa propia que vuelve al usuario 101.
+FROM nginxinc/nginx-unprivileged:alpine@sha256:b5047b9b76845eac124358373c6852377c52e4b05834a47647e955dd91cb8f1e AS nginx-actualizado
 USER root
 RUN apk upgrade --no-cache && apk del --no-cache curl
+USER 101
+
+FROM nginx-actualizado
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/dist /usr/share/nginx/html
 USER 101

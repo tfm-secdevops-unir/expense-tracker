@@ -7,4 +7,10 @@
 #     solicitante: usuario-que-la-pide
 #     aprobador: usuario-lider-de-seguridad
 #     caduca: 2026-12-01
-excepciones: []
+excepciones:
+  # Línea base: vulnerabilidad media sin corrección publicada en zlib de node:22-alpine.
+  - hallazgo: CVE-2026-4738:zlib@1.3.2-r1
+    motivo: Sin versión corregida en Alpine; se revisa al actualizar la imagen base
+    solicitante: erickpm23
+    aprobador: jbroncano
+    caduca: 2026-12-05
