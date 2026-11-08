@@ -1,0 +1,10 @@
+# Excepciones a la política de seguridad (regla R9). Ver POLITICA-SEGURIDAD.md en
+# tfm-secdevops-unir/secdevops-pipeline. Cada entrada necesita la aprobación del
+# líder de seguridad, distinto del solicitante, y caduca en 30 días como máximo.
+#
+#   - hallazgo: CVE-2021-23337:lodash@4.17.20
+#     motivo: Sin versión compatible hasta migrar el módulo de informes
+#     solicitante: usuario-que-la-pide
+#     aprobador: usuario-lider-de-seguridad
+#     caduca: 2026-12-01
+excepciones: []
