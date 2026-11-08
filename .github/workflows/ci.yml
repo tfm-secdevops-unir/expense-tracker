@@ -5,14 +5,56 @@ on:
     branches: [develop, main, 'release/**']
   pull_request:
     branches: [develop, main]
+  # Ejecución manual para la evaluación: elige pipeline, modo y casos de la puerta.
+  workflow_dispatch:
+    inputs:
+      pipeline:
+        type: choice
+        options: [seguro, base]
+        default: seguro
+      modo:
+        type: choice
+        options: [operativo, completo]
+        default: operativo
+      fecha-referencia:
+        description: Fecha AAAA-MM-DD para validar la caducidad de las excepciones (vacía, la del día)
+        type: string
+        default: ''
+      simular:
+        description: Solo para los casos P02 y P03
+        type: choice
+        options: [ninguno, fallo-herramienta, informe-invalido]
+        default: ninguno
 
 permissions:
   contents: read
 
 jobs:
   base:
-    uses: tfm-secdevops-unir/secdevops-pipeline/.github/workflows/base.yml@5d74732a6b0af9e482db79409275a2fe1b2798c7
+    if: github.event_name == 'workflow_dispatch' && inputs.pipeline == 'base'
+    uses: tfm-secdevops-unir/secdevops-pipeline/.github/workflows/base.yml@6a115ed30fcfcdeaf52568392b6e64a5abfa4e6b
     with:
       proyectos-node: '["backend","frontend"]'
       imagenes: '["backend","frontend"]'
       mongo: true
+
+  seguro:
+    if: github.event_name != 'workflow_dispatch' || inputs.pipeline == 'seguro'
+    uses: tfm-secdevops-unir/secdevops-pipeline/.github/workflows/seguro.yml@6a115ed30fcfcdeaf52568392b6e64a5abfa4e6b
+    permissions:
+      contents: read
+      id-token: write
+      security-events: write
+    secrets:
+      DOCKERHUB_USUARIO: ${{ secrets.DOCKERHUB_USUARIO }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+    with:
+      proyectos-node: '["backend","frontend"]'
+      imagenes: '["backend","frontend"]'
+      mongo: true
+      modo: ${{ inputs.modo || 'operativo' }}
+      lideres-seguridad: jbroncano
+      fecha-referencia: ${{ inputs.fecha-referencia }}
+      simular: ${{ inputs.simular != 'ninguno' && inputs.simular || '' }}
+      compose: docker-compose.yml

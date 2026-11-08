@@ -1,0 +1,24 @@
+# Avisos locales antes de completar el commit. Se activan con `pre-commit install`.
+# Se pueden omitir con --no-verify: el control efectivo es el pipeline seguro.
+default_install_hook_types: [pre-commit, commit-msg]
+repos:
+  - repo: local
+    hooks:
+      # Misma imagen y digest que la etapa de secretos del pipeline.
+      - id: gitleaks
+        name: secretos (Gitleaks)
+        language: docker_image
+        entry: zricethezav/gitleaks:v8.30.1@sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f git --pre-commit --redact --staged --verbose
+        pass_filenames: false
+        stages: [pre-commit]
+      - id: sin-menciones-ia
+        name: sin menciones a herramientas de IA
+        language: script
+        entry: .githooks/pre-commit
+        pass_filenames: false
+        stages: [pre-commit]
+      - id: mensaje-sin-coautor-ia
+        name: mensaje sin coautores de IA
+        language: script
+        entry: .githooks/commit-msg
+        stages: [commit-msg]
