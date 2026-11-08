@@ -7,6 +7,8 @@ const Expense = mongoose.model('Expense', new mongoose.Schema({
   date: { type: Date, default: Date.now },
 }));
 
+const API_TOKEN = process.env.API_TOKEN;
+
 const app = express();
 app.use(express.json());
 
