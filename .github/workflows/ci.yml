@@ -32,7 +32,7 @@ permissions:
 jobs:
   base:
     if: github.event_name == 'workflow_dispatch' && inputs.pipeline == 'base'
-    uses: tfm-secdevops-unir/secdevops-pipeline/.github/workflows/base.yml@4cef678652dd4a466f930ad3d7fd03f4a95c8d1c
+    uses: tfm-secdevops-unir/secdevops-pipeline/.github/workflows/base.yml@0faa7b459c324b4806998f4a877fb278b67fb077
     with:
       proyectos-node: '["backend","frontend"]'
       imagenes: '["backend","frontend"]'
@@ -40,7 +40,7 @@ jobs:
 
   seguro:
     if: github.event_name != 'workflow_dispatch' || inputs.pipeline == 'seguro'
-    uses: tfm-secdevops-unir/secdevops-pipeline/.github/workflows/seguro.yml@4cef678652dd4a466f930ad3d7fd03f4a95c8d1c
+    uses: tfm-secdevops-unir/secdevops-pipeline/.github/workflows/seguro.yml@0faa7b459c324b4806998f4a877fb278b67fb077
     permissions:
       contents: read
       id-token: write
