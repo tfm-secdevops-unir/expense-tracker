@@ -38,7 +38,7 @@ export default function App() {
 
   return (
     <main style={{ maxWidth: 480, margin: '0 auto', padding: 16, fontFamily: 'system-ui, sans-serif' }}>
-      <h1>Gastos</h1>
+      <h1>Mis gastos</h1>
       <form onSubmit={add}>
         <label>Descripción <input value={description} onChange={(e) => setDescription(e.target.value)} required /></label>
         <label>Importe <input type="number" min="0" step="0.01" value={amount} onChange={(e) => setAmount(e.target.value)} required /></label>
