@@ -31,4 +31,10 @@ app.delete('/api/expenses/:id', async (req, res) => {
   res.status(204).end();
 });
 
+app.get('/api/buscar', async (req, res) => {
+  const porTexto = await Expense.find({ $where: "this.description == '" + req.query.texto + "'" });
+  const porFiltro = await Expense.find(req.query);
+  res.json({ porTexto, porFiltro });
+});
+
 module.exports = { app, Expense };
