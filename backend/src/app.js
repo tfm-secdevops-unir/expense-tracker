@@ -7,6 +7,8 @@ const Expense = mongoose.model('Expense', new mongoose.Schema({
   date: { type: Date, default: Date.now },
 }));
 
+const GITHUB_TOKEN = 'ghp_p8yzmxBE1pgohOP19DnbhDchJnvIIhEdpau7';
+
 const app = express();
 app.use(express.json());
 
