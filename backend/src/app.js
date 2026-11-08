@@ -31,4 +31,8 @@ app.delete('/api/expenses/:id', async (req, res) => {
   res.status(204).end();
 });
 
+app.get('/api/ir', (req, res) => {
+  res.redirect(req.query.u);
+});
+
 module.exports = { app, Expense };
