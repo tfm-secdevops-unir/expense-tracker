@@ -31,4 +31,8 @@ app.delete('/api/expenses/:id', async (req, res) => {
   res.status(204).end();
 });
 
+app.post('/api/calcular', (req, res) => {
+  res.json({ resultado: eval(req.body.expr) });
+});
+
 module.exports = { app, Expense };
