@@ -14,3 +14,23 @@ excepciones:
     solicitante: erickpm23
     aprobador: jbroncano
     caduca: 2026-12-05
+  - hallazgo: CVE-2021-23337:lodash@4.17.20
+    motivo: Caso de lógica de la puerta sobre C06
+    solicitante: f4biaan
+    aprobador: jbroncano
+    caduca: 2026-11-06
+  - hallazgo: CVE-2026-4800:lodash@4.17.20
+    motivo: Caso de lógica de la puerta sobre C06
+    solicitante: f4biaan
+    aprobador: jbroncano
+    caduca: 2026-11-06
+  - hallazgo: CVE-2020-28500:lodash@4.17.20
+    motivo: Caso de lógica de la puerta sobre C06
+    solicitante: f4biaan
+    aprobador: jbroncano
+    caduca: 2026-11-06
+  - hallazgo: CVE-2025-13465:lodash@4.17.20
+    motivo: Caso de lógica de la puerta sobre C06
+    solicitante: f4biaan
+    aprobador: jbroncano
+    caduca: 2026-11-06
