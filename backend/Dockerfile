@@ -1,9 +1,13 @@
-FROM node:22-alpine@sha256:0e1754758c2df4cfa3e68d59e2e1b7374bb7fd9ea6328eaaacf15cc934af8202
+FROM node:22-alpine@sha256:0e1754758c2df4cfa3e68d59e2e1b7374bb7fd9ea6328eaaacf15cc934af8202 AS dependencias
 WORKDIR /app
 COPY package*.json ./
-# npm, npx, corepack y yarn solo hacen falta para instalar: se retiran de la imagen final.
-RUN npm ci --omit=dev \
- && rm -rf /usr/local/lib/node_modules /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack /opt/yarn-* /usr/local/bin/yarn /usr/local/bin/yarnpkg
+RUN npm ci --omit=dev
+
+FROM node:22-alpine@sha256:0e1754758c2df4cfa3e68d59e2e1b7374bb7fd9ea6328eaaacf15cc934af8202
+RUN rm -rf /usr/local/lib/node_modules /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack /opt/yarn-* /usr/local/bin/yarn /usr/local/bin/yarnpkg
+WORKDIR /app
+COPY --from=dependencias /app/node_modules ./node_modules
+COPY package.json ./
 COPY src ./src
 USER node
 EXPOSE 3000
